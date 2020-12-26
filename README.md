@@ -7,7 +7,7 @@ Prova Tecnica : **Analista Desenvolvedor .NET**.
 
 # # Objetivo
 
-    O objetivo do programa será a visualização de arquivos grandes (maior que 20GBs) via linha de comando, 
+O objetivo do programa será a visualização de arquivos grandes (maior que 20GBs) via linha de comando, 
 a carga dos dados do arquivo deverá ser dinâmica para evitar um consumo de memória excessivo. O programa deverá receber o nome do arquivo a ser visualizado como parâmetro da linha de comando.
 O programa apresentará 11 linhas de cada vez ao usuário, podendo receber os seguintes comandos:
 
