@@ -157,6 +157,8 @@ namespace ConsoleFileView
         {
             var listbuffer = new List<BufferTmp>();
 
+            Console.WriteLine("\r\n");
+            Console.WriteLine("\r\n");
             Console.WriteLine("▓███████████████████████████████████████████████████████████████▓");
             Console.WriteLine("▒         Prova Técnica : Visualizador de arquivos:             ▒");
             Console.WriteLine("▒               Nome: Fábio Sarmento Pereira                    ▒");
@@ -176,17 +178,21 @@ namespace ConsoleFileView
         {
             //Console.Clear();
             Console.WriteLine("Digite a opção desejada:");
+            Console.WriteLine("0) Gerar arquivo");
             Console.WriteLine("1) Importar arquivo");
             Console.WriteLine("2) Arrow Down ↓");  //Percorrer uma linha para baixo
             Console.WriteLine("3) Arrow Up ↑");    //Percorrer uma linha para cima  
             Console.WriteLine("4) Page Down");     //Percorrer 11 linhas para baixo 
             Console.WriteLine("5) Page Up");       //Percorrer 11 linhas para baixo  
-            Console.WriteLine("6) Digitar Linha");
+            Console.WriteLine("6) (L)- Digitar Linha");
             Console.WriteLine("7) Sair");
             Console.Write("\r\nDigite uma opção: ");
 
             switch (Console.ReadLine())
             {
+                case "0":
+                    GerarArquivo();
+                    return true;
                 case "1":
                     ImportarArquivo(listbuffer);
                     return true;
@@ -215,6 +221,57 @@ namespace ConsoleFileView
             }
         }
         #endregion
+
+        #region private static bool GerarArquivo() 
+        private static bool GerarArquivo() 
+        {
+            int i;
+
+            Console.WriteLine("Digite o diretorio do arquivo para geração, e pressione Enter");
+            arquivo = Convert.ToString(Console.ReadLine());
+
+            try {
+                if (File.Exists(arquivo))
+                    File.Delete(arquivo);
+
+                Console.WriteLine("▓███████████████████████████████████████████████████████████████▓");
+                Console.WriteLine("▒              Iniciando geração de arquivo                     ▓");
+                Console.WriteLine("▓███████████████████████████████████████████████████████████████▓");
+
+
+                StreamWriter arq = new StreamWriter(arquivo, true, Encoding.ASCII);
+                for (i = 1; i <= 750000000; i++)
+                {
+                    arq.WriteLine("ESCREVENDO A LINHA" + i);
+                }
+                arq.Close();
+
+                Console.WriteLine("\r\n");
+                Console.WriteLine("\r\n");
+                Console.WriteLine("▓███████████████████████████████████████████████████████████████▓");
+                Console.WriteLine("▓                                                               ▓");
+                Console.WriteLine("                        FIM   EXECUÇÃO                           ");
+                Console.WriteLine("▓                                                               ▓");
+                Console.WriteLine("▓███████████████████████████████████████████████████████████████▓");
+
+                Console.WriteLine("\r\n");
+                Console.WriteLine("\r\n");
+                return true;
+            }
+            catch
+            {
+                Console.WriteLine("\r\n");
+                Console.WriteLine("▓███████████████████████████████████████████████████████████████▓");
+                Console.WriteLine("▒                   Diretório Inválido                            ▓");
+                Console.WriteLine("▓███████████████████████████████████████████████████████████████▓");
+                Console.WriteLine("\r\n");
+                Console.WriteLine("\r\n");
+                return true;
+            }
+        
+        }
+        #endregion
+
 
         #region private static bool ImportarArquivo(List<BufferTmp> listbuffer)
         private static bool ImportarArquivo(List<BufferTmp> listbuffer)
@@ -321,6 +378,7 @@ namespace ConsoleFileView
         private static bool BuscarLinhas(List<BufferTmp> listbuffer , int codOpcao )
         {
             string opcao ="";
+            long numTmp = 0;
             int numLine = 0;
 
             qtdTake = 11;
@@ -402,9 +460,21 @@ namespace ConsoleFileView
             {
                 opcao = "Redefinição Linha";
                 Console.WriteLine("Digite o numero da linha para referência, e pressione Enter");
-                numLine = Convert.ToInt32(Console.ReadLine());
+                                
+                numTmp = Convert.ToInt64(Console.ReadLine());
+                
+                if (numTmp > 2147483647 )
+                {
+                    Console.WriteLine("\r\n");
+                    Console.WriteLine("▓███████████████████████████████████████████████████████████████▓");
+                    Console.WriteLine("▒       Capacidade superior ao limite permitido !               ▓");
+                    Console.WriteLine("▓███████████████████████████████████████████████████████████████▓");
+                    Console.WriteLine("\r\n");
+                    Console.WriteLine("\r\n");
+                    return true;
+                }
 
-                if (numLine > totalinhas)
+                if (numTmp > totalinhas)
                 {
                     Console.WriteLine("\r\n");
                     Console.WriteLine("▓███████████████████████████████████████████████████████████████▓");
@@ -414,6 +484,8 @@ namespace ConsoleFileView
                     Console.WriteLine("\r\n");
                     return true;
                 }
+
+                numLine = Convert.ToInt32(numTmp);
 
 
                 if ( numLine > 5 )
@@ -445,9 +517,6 @@ namespace ConsoleFileView
             Console.WriteLine("▓███████████████████████████████████████████████████████████████▓");
 
             CarregarBuffer(listbuffer, posIniLinha-1, posFimLinha-1);
-
-            //IEnumerable<string> list = File.ReadLines(arquivo).Skip(qtdSkip).Take(qtdTake).ToList();
-
             Console.WriteLine("\r\n");
             Console.WriteLine("\r\n");
 
