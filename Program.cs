@@ -214,7 +214,10 @@ namespace ConsoleFileView
                 case "7":
                     return false;
                 default:
-                    Console.WriteLine("Opção inválida!");
+                    Console.WriteLine("\r\n");
+                    Console.WriteLine("▓███████████████████████████████████████████████████████████████▓");
+                    Console.WriteLine("▒                     Opção Inválida                            ▓");
+                    Console.WriteLine("▓███████████████████████████████████████████████████████████████▓");
                     Console.WriteLine("\r\n");
                     Console.WriteLine("\r\n");
                     return true;
